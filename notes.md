@@ -14,7 +14,7 @@
 | View franchise<br/>(as diner)                       | `franchiseDashboard.tsx` | `[GET] /api/franchise/:userId` | `SELECT objectId FROM userRole WHERE role='franchisee' AND userId=?` |
 | Logout                                              | `logout.tsx`       | `[DELETE] /api/auth` | `DELETE FROM auth WHERE token=?` |
 | View About page                                     | `about.tsx`        | `none`            | `none`       |
-| View History page                                   |                    |                   |              |
+| View History page                                   | `history.tsx`      | `none`            | `none`       |
 | Login as franchisee<br/>(f@jwt.com, pw: franchisee) |                    |                   |              |
 | View franchise<br/>(as franchisee)                  |                    |                   |              |
 | Create a store                                      |                    |                   |              |
