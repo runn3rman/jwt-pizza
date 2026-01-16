@@ -12,7 +12,7 @@
 | Verify pizza                                        | `delivery.tsx`     | `[POST] /api/order/verify` | `none`       |
 | View profile page                                   | `dinerDashboard.tsx` | `[GET] /api/order` | `SELECT id, franchiseId, storeId, date FROM dinerOrder WHERE dinerId=? LIMIT ${offset},${config.db.listPerPage}`<br/>`SELECT id, menuId, description, price FROM orderItem WHERE orderId=?` |
 | View franchise<br/>(as diner)                       | `franchiseDashboard.tsx` | `[GET] /api/franchise/:userId` | `SELECT objectId FROM userRole WHERE role='franchisee' AND userId=?` |
-| Logout                                              |                    |                   |              |
+| Logout                                              | `logout.tsx`       | `[DELETE] /api/auth` | `DELETE FROM auth WHERE token=?` |
 | View About page                                     |                    |                   |              |
 | View History page                                   |                    |                   |              |
 | Login as franchisee<br/>(f@jwt.com, pw: franchisee) |                    |                   |              |
