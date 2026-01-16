@@ -10,7 +10,7 @@
 | Login new user<br/>(t@jwt.com, pw: test)            | `login.tsx`        | `[PUT] /api/auth` | `SELECT * FROM user WHERE email=?`<br/>`SELECT * FROM userRole WHERE userId=?`<br/>`INSERT INTO auth (token, userId) VALUES (?, ?) ON DUPLICATE KEY UPDATE token=token` |
 | Order pizza                                         | `payment.tsx`      | `[POST] /api/order` | `INSERT INTO dinerOrder (dinerId, franchiseId, storeId, date) VALUES (?, ?, ?, now())`<br/>`INSERT INTO orderItem (orderId, menuId, description, price) VALUES (?, ?, ?, ?)` |
 | Verify pizza                                        | `delivery.tsx`     | `[POST] /api/order/verify` | `none`       |
-| View profile page                                   |                    |                   |              |
+| View profile page                                   | `dinerDashboard.tsx` | `[GET] /api/order` | `SELECT id, franchiseId, storeId, date FROM dinerOrder WHERE dinerId=? LIMIT ${offset},${config.db.listPerPage}`<br/>`SELECT id, menuId, description, price FROM orderItem WHERE orderId=?` |
 | View franchise<br/>(as diner)                       |                    |                   |              |
 | Logout                                              |                    |                   |              |
 | View About page                                     |                    |                   |              |
