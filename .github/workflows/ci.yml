@@ -27,9 +27,18 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           printf '{"version": "%s" }' "$version" > public/version.json
 
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright coverage tests
+        run: npm run test:coverage
+
       - name: Build
         run: |
-          npm ci && npm run build
+          npm run build
           cp dist/index.html dist/404.html
 
       - name: Update pages artifact
