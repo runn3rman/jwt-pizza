@@ -281,3 +281,9 @@ test('payment redirects to login if unauthenticated', async ({ page }) => {
   await page.goto('/payment');
   await expect(page).toHaveURL(/\/payment\/login$/);
 });
+
+test('diner dashboard with no orders', async ({ page }) => {
+  await basicInit(page, { sessionUser: dinerUser, orders: [] });
+  await page.goto('/diner-dashboard');
+  await expect(page.getByText('How have you lived this long without having a pizza?')).toBeVisible();
+});
