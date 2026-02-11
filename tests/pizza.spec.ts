@@ -297,3 +297,22 @@ test('diner dashboard with order history', async ({ page }) => {
   await expect(page.getByText('Here is your history of all the good times.')).toBeVisible();
   await expect(page.getByText('88')).toBeVisible();
 });
+
+test('franchise dashboard marketing and store creation', async ({ page }) => {
+  await basicInit(page);
+  await page.goto('/franchise-dashboard');
+  await expect(page.getByText('So you want a piece of the pie?')).toBeVisible();
+
+  await basicInit(page, { sessionUser: franchiseeUser });
+  await page.goto('/franchise-dashboard');
+  await expect(page.getByText('LotaPizza')).toBeVisible();
+  await page.getByRole('button', { name: 'Create store' }).click();
+  await expect(page).toHaveURL(/\/franchise-dashboard\/create-store$/);
+  await page.getByPlaceholder('store name').fill('Mapleton');
+  await page.getByRole('button', { name: 'Create' }).click();
+  await expect(page).toHaveURL('/franchise-dashboard');
+
+  await page.getByRole('button', { name: 'Close' }).first().click();
+  await expect(page.getByText('Sorry to see you go')).toBeVisible();
+  await page.getByRole('button', { name: 'Cancel' }).click();
+});
