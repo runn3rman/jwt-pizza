@@ -339,3 +339,26 @@ test('admin dashboard includes filter and franchise/store close/create flows', a
   await page.getByRole('button', { name: 'Close' }).click();
   await expect(page).toHaveURL('/admin-dashboard');
 });
+
+test('docs, about, history, not-found, logout routes render', async ({ page }) => {
+  await basicInit(page, { sessionUser: dinerUser });
+
+  await page.goto('/docs/service');
+  await expect(page.getByText('JWT Pizza API')).toBeVisible();
+  await expect(page.getByText('Example request')).toBeVisible();
+
+  await page.goto('/docs/factory');
+  await expect(page.getByText('Response')).toBeVisible();
+
+  await page.goto('/about');
+  await expect(page.getByText('The secret sauce')).toBeVisible();
+
+  await page.goto('/history');
+  await expect(page.getByText('Mama Rucci, my my')).toBeVisible();
+
+  await page.goto('/unknown-route');
+  await expect(page.getByText('Oops')).toBeVisible();
+
+  await page.goto('/logout');
+  await expect(page).toHaveURL('/');
+});
