@@ -316,3 +316,26 @@ test('franchise dashboard marketing and store creation', async ({ page }) => {
   await expect(page.getByText('Sorry to see you go')).toBeVisible();
   await page.getByRole('button', { name: 'Cancel' }).click();
 });
+
+test('admin dashboard includes filter and franchise/store close/create flows', async ({ page }) => {
+  await basicInit(page, { sessionUser: adminUser });
+  await page.goto('/admin-dashboard');
+  await expect(page.getByText("Mama Ricci's kitchen")).toBeVisible();
+
+  await page.getByPlaceholder('Filter franchises').fill('pizza');
+  await page.getByRole('button', { name: 'Submit' }).click();
+
+  await page.getByRole('button', { name: 'Add Franchise' }).click();
+  await page.getByPlaceholder('franchise name').fill('New Slice');
+  await page.getByPlaceholder('franchisee admin email').fill('owner@jwt.com');
+  await page.getByRole('button', { name: 'Create' }).click();
+  await expect(page).toHaveURL('/admin-dashboard');
+
+  await page.getByRole('button', { name: 'Close' }).first().click();
+  await page.getByRole('button', { name: 'Close' }).click();
+  await expect(page).toHaveURL('/admin-dashboard');
+
+  await page.getByRole('button', { name: 'Close' }).nth(1).click();
+  await page.getByRole('button', { name: 'Close' }).click();
+  await expect(page).toHaveURL('/admin-dashboard');
+});
