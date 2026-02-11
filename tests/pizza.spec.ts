@@ -275,3 +275,9 @@ test('payment error branch and cancel branch', async ({ page }) => {
   await page.getByRole('button', { name: 'Cancel' }).click();
   await expect(page).toHaveURL('/menu');
 });
+
+test('payment redirects to login if unauthenticated', async ({ page }) => {
+  await basicInit(page);
+  await page.goto('/payment');
+  await expect(page).toHaveURL(/\/payment\/login$/);
+});
