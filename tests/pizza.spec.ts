@@ -287,3 +287,13 @@ test('diner dashboard with no orders', async ({ page }) => {
   await page.goto('/diner-dashboard');
   await expect(page.getByText('How have you lived this long without having a pizza?')).toBeVisible();
 });
+
+test('diner dashboard with order history', async ({ page }) => {
+  await basicInit(page, {
+    sessionUser: dinerUser,
+    orders: [{ id: '88', date: '2026-02-11', items: [{ menuId: 1, description: 'Veggie', price: 0.0038 }] }],
+  });
+  await page.goto('/diner-dashboard');
+  await expect(page.getByText('Here is your history of all the good times.')).toBeVisible();
+  await expect(page.getByText('88')).toBeVisible();
+});
