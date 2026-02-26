@@ -3,15 +3,7 @@ import type { Page } from '@playwright/test';
 import { Role, User } from '../src/service/pizzaService';
 
 test('updateUser', async ({ page }) => {
-  const email = `user${Math.floor(Math.random() * 10000)}@jwt.com`;
-  await page.goto('/');
-  await page.getByRole('link', { name: 'Register' }).click();
-  await page.getByRole('textbox', { name: 'Full name' }).fill('pizza diner');
-  await page.getByRole('textbox', { name: 'Email address' }).fill(email);
-  await page.getByRole('textbox', { name: 'Password' }).fill('diner');
-  await page.getByRole('button', { name: 'Register' }).click();
-
-  await page.getByRole('link', { name: 'pd' }).click();
+  await initUserUpdate(page, { id: '21', name: 'pizza diner', email: 'user@jwt.com', password: 'diner', roles: [{ role: Role.Diner }] });
 
   await expect(page.getByRole('main')).toContainText('pizza diner');
 
@@ -27,7 +19,7 @@ test('updateUser', async ({ page }) => {
   await page.getByRole('link', { name: 'Logout' }).click();
   await page.getByRole('link', { name: 'Login' }).click();
 
-  await page.getByRole('textbox', { name: 'Email address' }).fill(email);
+  await page.getByRole('textbox', { name: 'Email address' }).fill('user@jwt.com');
   await page.getByRole('textbox', { name: 'Password' }).fill('diner');
   await page.getByRole('button', { name: 'Login' }).click();
 
