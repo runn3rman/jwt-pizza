@@ -64,16 +64,11 @@ async function initUserUpdate(page: Page, startingUser: User) {
     }
 
     if (method === 'DELETE') {
-      loggedInUser = undefined;
       await route.fulfill({ json: {} });
       return;
     }
 
     await route.fulfill({ status: 405, json: { message: 'Method not allowed' } });
-  });
-
-  await page.route('*/**/api/user/me', async (route) => {
-    await route.fulfill({ json: withoutPassword(loggedInUser) });
   });
 
   await page.route('*/**/api/user/*', async (route) => {
@@ -91,6 +86,10 @@ async function initUserUpdate(page: Page, startingUser: User) {
       roles: body.roles,
     };
     await route.fulfill({ json: { user: withoutPassword(loggedInUser), token: 'updated-token' } });
+  });
+
+  await page.route('*/**/api/user/me', async (route) => {
+    await route.fulfill({ json: withoutPassword(loggedInUser) });
   });
 
   await page.route('*/**/api/order', async (route) => {
